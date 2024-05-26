@@ -5,24 +5,63 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Калькулятор</title>
 <style>
+  body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f7f7f7;
+  }
   .calculator {
     border: 1px solid #ccc;
     border-radius: 5px;
-    padding: 10px;
-    display: inline-block;
+    padding: 20px;
+    display: inline-grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
   }
   .calculator .display {
-    width: 100%;
-    padding: 10px;
+    grid-column: span 4;
+    padding: 20px;
     background-color: #f2f2f2;
     text-align: right;
-    margin-bottom: 10px;
+    font-size: 2em;
+    border: none;
+    border-radius: 5px;
   }
   .calculator button {
-    width: 20%;
-    padding: 10px;
-    margin: 5px;
-    font-size: 16px;
+    padding: 20px;
+    font-size: 1.5em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #e7e7e7;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .calculator button:hover {
+    background-color: #d7d7d7;
+  }
+  .calculator button:active {
+    background-color: #ccc;
+  }
+  .calculator button.operation {
+    background-color: #f9f9f9;
+  }
+  .calculator button.equal {
+    grid-column: span 2;
+    background-color: #9ec862;
+    color: white;
+  }
+  .calculator button.clear {
+    background-color: #f76c6c;
+    color: white;
+  }
+  .calculator button.delete {
+    background-color: #f9c862;
+    color: white;
   }
 </style>
 </head>
@@ -33,19 +72,21 @@
   <button onclick="press('1')">1</button>
   <button onclick="press('2')">2</button>
   <button onclick="press('3')">3</button>
-  <button onclick="press('+')">+</button><br>
+  <button onclick="press('+')" class="operation">+</button>
   <button onclick="press('4')">4</button>
   <button onclick="press('5')">5</button>
   <button onclick="press('6')">6</button>
-  <button onclick="press('-')">-</button><br>
+  <button onclick="press('-')" class="operation">-</button>
   <button onclick="press('7')">7</button>
   <button onclick="press('8')">8</button>
   <button onclick="press('9')">9</button>
-  <button onclick="press('*')">*</button><br>
+  <button onclick="press('*')" class="operation">*</button>
+  <button onclick="deleteLast()" class="delete">←</button>
   <button onclick="press('0')">0</button>
   <button onclick="press('.')">.</button>
-  <button onclick="calculate()">=</button>
-  <button onclick="clearDisplay()">C</button>
+  <button onclick="press('/')" class="operation">/</button>
+  <button onclick="calculate()" class="equal">=</button>
+  <button onclick="clearDisplay()" class="clear">C</button>
 </div>
 
 <script>
@@ -71,6 +112,15 @@
   
   function clearDisplay() {
     displayValue = '0';
+    document.getElementById('display').innerText = displayValue;
+  }
+  
+  function deleteLast() {
+    if (displayValue.length > 1) {
+      displayValue = displayValue.slice(0, -1);
+    } else {
+      displayValue = '0';
+    }
     document.getElementById('display').innerText = displayValue;
   }
 </script>
