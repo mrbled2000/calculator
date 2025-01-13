@@ -2,31 +2,86 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Социальные ссылки</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Basic Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: #1a1a1a; /* Начальный цвет фона */
+            color: white;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
+            overflow: hidden;
+            transition: background-color 2s ease-in-out; /* Плавный переход цвета фона */
         }
 
+        /* Floating Shapes */
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+
+        .circle {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #FF0000, #FF9900);
+            animation: float 10s infinite;
+        }
+
+        .capsule {
+            width: 200px;
+            height: 100px;
+            background: linear-gradient(135deg, #4680C2, #FF0050);
+            border-radius: 50px;
+            animation: float 12s infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(50px, -50px); }
+            50% { transform: translate(-50px, 50px); }
+            75% { transform: translate(-50px, -50px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        /* Container for social links */
         .container {
-            background-color: white;
+            background-color: rgba(0, 0, 0, 0.7); /* Черный фон для контейнера */
             border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
             padding: 40px;
             text-align: center;
-            width: 400px;
+            width: 90%;
+            max-width: 400px;
+            z-index: 1;
         }
 
         h1 {
-            color: #333;
+            color: #ffcc00;
             margin-bottom: 30px;
+            font-size: 2em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .social-links {
@@ -46,6 +101,8 @@
             align-items: center;
             justify-content: center;
             font-size: 18px;
+            position: relative;
+            overflow: hidden;
         }
 
         .social-btn i {
@@ -55,34 +112,44 @@
 
         .social-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
 
-        .telegram {
-            background-color: #0088cc;
-        }
+        /* Specific styles for each social button */
+        .telegram { background-color: #0088cc; }
+        .youtube { background-color: #FF0000; }
+        .vk { background-color: #4680C2; }
+        .tiktok { background: linear-gradient(45deg, #000 30%, #ff0050 90%); }
 
-        .youtube {
-            background-color: #FF0000;
-        }
+        /* Responsive design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
 
-        .vk {
-            background-color: #4680C2;
-        }
+            h1 {
+                font-size: 1.5em;
+            }
 
-        .tiktok {
-            background: linear-gradient(45deg, #000 30%, #ff0050 90%);
+            .social-btn {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="floating-shapes">
+        <div class="shape circle" style="top: 10%; left: 20%;"></div>
+        <div class="shape capsule" style="top: 30%; left: 50%;"></div>
+        <div class="shape circle" style="top: 70%; left: 80%;"></div>
+    </div>
     <div class="container">
         <h1>Мои социальные сети</h1>
         <div class="social-links">
             <a href="https://t.me/Slicing5opka5" class="social-btn telegram" target="_blank">
                 <i class="fab fa-telegram-plane"></i>Telegram канал
             </a>
-            <a href="https://youtube.com/@slicing5opka5?si=pCvldsN3KIOWFFe_" class="social-btn youtube" target="_blank">
+            <a href="https://youtube.com/channel/UC5kP9rnAiIZu0eNTrJAUTkA?si=plSgCLuxOoXGJ3zs" class="social-btn youtube" target="_blank">
                 <i class="fab fa-youtube"></i>YouTube канал
             </a>
             <a href="https://vkvideo.ru/video/@slices5opka" class="social-btn vk" target="_blank">
@@ -93,5 +160,42 @@
             </a>
         </div>
     </div>
+
+    <script>
+        // Function to change the background color randomly
+        let currentColorIndex = 0;
+        const colors = [
+            '#1a1a1a', '#333', '#ffcc00', '#4680C2', '#FF0000',
+            '#FF9900', '#00ff00', '#00ccff', '#ff00cc'
+        ];
+
+        function changeBackgroundColor() {
+            const nextColorIndex = (currentColorIndex + 1) % colors.length;
+            const nextColor = colors[nextColorIndex];
+
+            // Плавно меняем цвет фона
+            document.body.style.backgroundColor = nextColor;
+
+            currentColorIndex = nextColorIndex;
+        }
+
+        // Изменение цвета фона каждые 5 секунд
+        setInterval(changeBackgroundColor, 5000);
+
+        // Функция для случайного изменения направления движения плавающих фигур
+        function randomizeShapeMovement() {
+            const shapes = document.querySelectorAll('.shape');
+            shapes.forEach(shape => {
+                const randomX = Math.random() * (window.innerWidth - 200); // Случайный X-координат в пределах ширины окна
+                const randomY = Math.random() * (window.innerHeight - 200); // Случайный Y-координат в пределах высоты окна
+                const duration = Math.random() * 5 + 5; // Случайная продолжительность между 5с и 10с
+                shape.style.transition = `transform ${duration}s ease-in-out`; // Плавный переход для движения
+                shape.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            });
+        }
+
+        // Случайное изменение движения фигур каждые 3 секунды
+        setInterval(randomizeShapeMovement, 3000);
+    </script>
 </body>
 </html>
